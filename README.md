@@ -1,2 +1,4 @@
 # arduin4ik
-Arduino temperature sensor sketch + Telegram bot 
+* Arduino One temperature sensor sketch
+* Java8 Telegram bot. Can request temperature via COM to chat
+* Just fo fun
