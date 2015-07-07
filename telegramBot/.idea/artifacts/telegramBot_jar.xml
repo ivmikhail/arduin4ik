@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="telegramBot:jar">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="root">
+      <element id="archive" name="telegramBot.jar">
+        <element id="module-output" name="telegramBot" />
+      </element>
+    </root>
+  </artifact>
+</component>
