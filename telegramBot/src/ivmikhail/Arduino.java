@@ -44,25 +44,22 @@ public class Arduino {
 
         @Override
         public void serialEvent(SerialPortEvent event) {
-            if (event.isRXCHAR()) {
-                String message = "";
+            String message = "";
+            try {
+                String temperature = serialPort.readString(7, 1000).replace("\n", "");
+                message = "Temperature is " + temperature.toString() + "C";
+            } catch (SerialPortException | SerialPortTimeoutException ex) {
+                ex.printStackTrace();
+                message = "Sensor unavailable now, read error";
+            } finally {
                 try {
-                    byte[] bytes = serialPort.readBytes(5, 1000);
-                    String result = new String(bytes);
-                    message = "Temperature is " + result + " C";
-                } catch (SerialPortException | SerialPortTimeoutException ex) {
-                    ex.printStackTrace();
-                    message = "Sensor unavailable now, read error";
-                } finally {
-                    try {
-                        serialPort.closePort();
-                    } catch (SerialPortException e) {
-                        e.printStackTrace();
-                    }
+                    serialPort.closePort();
+                } catch (SerialPortException e) {
+                    e.printStackTrace();
                 }
-                if (!message.isEmpty()) {
-                    Main.sendMessage(chatId, message);
-                }
+            }
+            if (!message.isEmpty()) {
+                Main.sendMessage(chatId, message);
             }
         }
     }

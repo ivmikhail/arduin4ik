@@ -12,12 +12,15 @@ import com.google.gson.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
-    public static final String API_KEY = "telegram bot key";
+    public static final String API_KEY = "";
     public static final JsonParser parser = new JsonParser();
     public static File file;
 
@@ -104,6 +107,12 @@ public class Main {
             case "/start":
                 sendMessage(chatId, "Who are you, and why should I care?");
                 break;
+            case "/sanpin":
+                sendPhoto(chatId, "AgADAgADwacxG1VX8AABzimqpjQH3QbE7FkqAATVqDksTbYSW0cyAAIC");
+                break;
+            case "/whours":
+                sendMessage(chatId, "Who are you, and why should I care?");
+                break;
         }
 
         System.out.println(new Date() + " : " + message.getText());
@@ -116,6 +125,7 @@ public class Main {
             return "bugagaga";
         }
     }
+
     public static void sendWeather(long chatId) {
         Arduino.getTemperatureFromSensorAndSend(chatId);
     }
@@ -129,8 +139,10 @@ public class Main {
         sendMessage(chatId, "Funny bot with Arduino via COM\n" +
                 "/help - you know\n" +
                 "/weather - weather at office 500\n" +
-                "/selfie - my photo");
-     }
+                "/selfie - my photo\n" +
+                "/sanpin - sanpin working hours standart\n" +
+                "/whours - working hours with current temperature\n");
+    }
 
     public static void sendMessage(long chatId, String message) {
         UrlUtil.sendPostRequest("https://api.telegram.org/bot" + API_KEY + "/sendMessage", "chat_id=" + chatId + "&text=" + message);
@@ -139,4 +151,6 @@ public class Main {
     public static void sendPhoto(long chatId, String photo) {
         UrlUtil.sendPostRequest("https://api.telegram.org/bot" + API_KEY + "/sendPhoto", "chat_id=" + chatId + "&photo=" + photo);
     }
+
+
 }
